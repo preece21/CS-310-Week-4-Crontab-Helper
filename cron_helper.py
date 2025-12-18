@@ -2,8 +2,28 @@ import subprocess
 import sys
 import os
 
-main():
+VALID_CHAR = [*, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+def validate_program(program):
+  if os.path.isfile(program) and os.access(program, os.X_OK): # Checks if program is an executable file
+    return True
+  else:
+    return False
+
+def validate_cron(schedule):
+  if length(schedule) != 5:
+    return False
+  for field in schedule.split():
+    for digit in field.split():
+      if digit not in VALID_CHAR:
+        return False
+  return True
+
+def main():
   program = input("Enter the full path to the program you want to schedule: ")
+  if not validate_program(program):
+    print(f"{program} is not a valid program. Please try again")
+    break
 
   print("Please choose a schedule")
   print("1: Hourly")
@@ -24,7 +44,8 @@ main():
     schedule = "0 0 1 * *" # Every month of the first day of the month
   elif schedule_choice == "5":
     schedule = input("Enter custom cron schedule (ex: 0 0 * * 1): ")
-
+    if not validate_schedule(schedule):
+      print(f"{schedule] is not a valid schedule. Please try again."
   print(f"\nProcess to be scheduled: {program}\nCron Schedule: {schedule}\n")
 
   existing_cron = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
