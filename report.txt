@@ -1,0 +1,3 @@
+1. I use if and elif statements to allow the user to pick from a menu.
+2. I check if there is a file at the specified path and I check if the file is executable using the os library.
+3. I check for valid schedule syntax by making sure there were 5 fields enter and that they only contain digits or *.
